@@ -18,14 +18,12 @@ public class ParseCommand {
 
     private String cmdTypeIdentifier(String cmd) throws DukeException {
         try {
-            if (cmd.equalsIgnoreCase("list")) {
+            if (cmd.equalsIgnoreCase("list")){
                 return "LIST";
             } else if (cmd.equalsIgnoreCase("bye")) {
                 exitStatus = true;
                 return "BYE";
-            } else if (cmd.substring(0,4).equalsIgnoreCase("find")) {
-                return "FIND";
-            } else if (cmd.substring(0,4).equalsIgnoreCase("done")) {
+            }else if (cmd.substring(0,4).equalsIgnoreCase("done")) {
                 return "DONE";
             } else if (cmd.substring(0,4).equalsIgnoreCase("todo")) {
                 return "TODO";
@@ -67,32 +65,12 @@ public class ParseCommand {
             case "DELETE":
                 taskList.remove(findObjectToRemove(taskList));
                 break;
-            case "FIND":
-                ui.printTaskList(findTask(taskList));
-                break;
             default:
                 break;
             }
             storage.saveTaskList(taskList);
         }
 
-    }
-
-    public ArrayList<Task> findTask(ArrayList<Task> taskList) throws DukeException {
-        ArrayList<Task> filteredTasks = new ArrayList<>();
-        String keyword;
-        try {
-            keyword = fullCommand.substring(5);
-        } catch (StringIndexOutOfBoundsException e) {
-            throw new DukeException();
-        }
-        System.out.println(keyword);
-        for (Task item:taskList) {
-            if (item.getDescription().contains(keyword)) {
-                filteredTasks.add(item);
-            }
-        }
-        return filteredTasks;
     }
 
     public void markTaskAsDone(ArrayList<Task> taskList) throws DukeException {
